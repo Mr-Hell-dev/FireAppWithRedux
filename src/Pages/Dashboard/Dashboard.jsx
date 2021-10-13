@@ -1,7 +1,9 @@
 import React from 'react';
+import { useAuthentication } from '../../Contents/AuthContext';
 
 export default function Dashboard() {
-    const isloggedIn = false;
+    const isloggedIn =
+        useAuthentication.curuser === undefined ? false : true;
 
     return (
         <>
@@ -11,6 +13,7 @@ export default function Dashboard() {
                 <div>
                     You are not authorised to view this page please
                     login
+                    {useAuthentication.curuser}
                 </div>
             )}
         </>

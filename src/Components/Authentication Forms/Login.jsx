@@ -1,10 +1,18 @@
+import { SignInMethod } from '@firebase/auth';
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
+import { useHistory } from 'react-router';
+import { useAuthentication } from '../../Contents/AuthContext';
+import { validateEmail, validatepassword } from '../../Validations';
 
-export default function Login({ Loginhandler, Errors }) {
+export default function Login({ Errors, setform }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, seterror] = useState('');
+    const AuthFunctions = useAuthentication();
+    const history = useHistory();
+
     const ChangeHandler = (e) => {
         switch (e.target.id) {
             case 'EmailId':
@@ -15,6 +23,36 @@ export default function Login({ Loginhandler, Errors }) {
                 break;
             default:
                 break;
+        }
+    };
+
+    const SignInMethod = (e) => {
+        e.preventDefault();
+        seterror('');
+        if (validateEmail(email) && validatepassword(password)) {
+            AuthFunctions.SignInEP(email, password)
+                .then((userdata) => history.push('/dashboard'))
+                .catch((err) => {
+                    console.log(err.code);
+                    switch (err.code) {
+                        case 'auth/invalid-email':
+                        case 'auth/user-not-found':
+                            seterror('Invalid Email');
+                            break;
+                        case 'auth/wrong-password':
+                            seterror('Invalid Credentails');
+                            break;
+                        default:
+                            seterror(
+                                'Something went wrong Try again',
+                            );
+                            break;
+                    }
+                });
+        } else {
+            seterror(
+                'Email and Password Field contains Incorrect values',
+            );
         }
     };
     return (
@@ -44,16 +82,14 @@ export default function Login({ Loginhandler, Errors }) {
                     />
                 </div>
                 <div className="text-center text-red-400">
-                    <p>{Errors}</p>
+                    <p>{error}</p>
                 </div>
 
                 <div className="w-1/2 m-auto">
                     <button
                         className="bg-blue-300 hover:bg-blue-500 w-full text-xl font-bold text-white p-3 rounded"
                         type="Submit"
-                        onClick={(e) =>
-                            Loginhandler(e, email, password)
-                        }
+                        onClick={SignInMethod}
                     >
                         Login
                     </button>
@@ -70,6 +106,15 @@ export default function Login({ Loginhandler, Errors }) {
                         </button>
                     </div>
                 </div>
+                <a
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setform('SignUp');
+                    }}
+                >
+                    Don't have an Account
+                </a>
             </form>
         </div>
     );

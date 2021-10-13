@@ -25,4 +25,17 @@ const validatePhone = (value) => {
     }
     return result;
 };
-module.exports = { validateEmail, validateName, validatePhone };
+const validatepassword = (value) => {
+    let result = false;
+    if (value.length < 30 && value.length > 0) {
+        result = true;
+    }
+    return result;
+};
+
+module.exports = {
+    validateEmail,
+    validateName,
+    validatePhone,
+    validatepassword,
+};
