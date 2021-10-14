@@ -1,21 +1,15 @@
-import React from 'react';
-import { useAuthentication } from '../../Contents/AuthContext';
+import React from 'react'
+import { useAuthentication } from '../../Contents/AuthContext'
 
 export default function Dashboard() {
-    const isloggedIn =
-        useAuthentication.curuser === undefined ? false : true;
-
+    const { loggedin: isloggedin } = useAuthentication()
     return (
         <>
-            {isloggedIn ? (
+            {isloggedin ? (
                 <h1 className="">This is dashboard boi</h1>
             ) : (
-                <div>
-                    You are not authorised to view this page please
-                    login
-                    {useAuthentication.curuser}
-                </div>
+                <div>You are not authorised to view this page please login</div>
             )}
         </>
-    );
+    )
 }

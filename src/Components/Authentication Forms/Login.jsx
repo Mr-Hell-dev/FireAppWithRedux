@@ -1,64 +1,62 @@
-import { SignInMethod } from '@firebase/auth';
-import React, { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { SiFacebook } from 'react-icons/si';
-import { useHistory } from 'react-router';
-import { useAuthentication } from '../../Contents/AuthContext';
-import { validateEmail, validatepassword } from '../../Validations';
+import React, { useState } from 'react'
+import { FcGoogle } from 'react-icons/fc'
+import { SiFacebook } from 'react-icons/si'
+import { useHistory } from 'react-router'
+import { useAuthentication } from '../../Contents/AuthContext'
+import { validateEmail, validatepassword } from '../../Validations'
 
 export default function Login({ Errors, setform }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, seterror] = useState('');
-    const AuthFunctions = useAuthentication();
-    const history = useHistory();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, seterror] = useState('')
+    const AuthFunctions = useAuthentication()
+    const history = useHistory()
 
     const ChangeHandler = (e) => {
         switch (e.target.id) {
             case 'EmailId':
-                setEmail(e.target.value);
-                break;
+                setEmail(e.target.value)
+                break
             case 'Password':
-                setPassword(e.target.value);
-                break;
+                setPassword(e.target.value)
+                break
             default:
-                break;
+                break
         }
-    };
+    }
 
     const SignInMethod = (e) => {
-        e.preventDefault();
-        seterror('');
+        e.preventDefault()
+        seterror('')
         if (validateEmail(email) && validatepassword(password)) {
             AuthFunctions.SignInEP(email, password)
                 .then((userdata) => history.push('/dashboard'))
                 .catch((err) => {
-                    console.log(err.code);
+                    console.log(err.code)
                     switch (err.code) {
                         case 'auth/invalid-email':
                         case 'auth/user-not-found':
-                            seterror('Invalid Email');
-                            break;
+                            seterror('Invalid Email')
+                            break
                         case 'auth/wrong-password':
-                            seterror('Invalid Credentails');
-                            break;
+                            seterror('Invalid Credentails')
+                            break
                         default:
-                            seterror(
-                                'Something went wrong Try again',
-                            );
-                            break;
+                            seterror('Something went wrong Try again')
+                            break
                     }
-                });
+                })
         } else {
-            seterror(
-                'Email and Password Field contains Incorrect values',
-            );
+            seterror('Email and Password Field contains Incorrect values')
         }
-    };
+    }
     return (
         <div className=" w-full p-3 text-center ">
             <h1 className="text-3xl text-center">Login In</h1>
-            <form className="w-9/12 m-auto space-y-5 mt-3 p-4 bg-indigo-100 rounded-xl">
+            <form
+                className="w-9/12 m-auto space-y-5 mt-3 p-4 bg-indigo-100 rounded-xl"
+                onSubmit={SignInMethod}
+            >
                 <div className="">
                     <input
                         name="Email"
@@ -89,7 +87,6 @@ export default function Login({ Errors, setform }) {
                     <button
                         className="bg-blue-300 hover:bg-blue-500 w-full text-xl font-bold text-white p-3 rounded"
                         type="Submit"
-                        onClick={SignInMethod}
                     >
                         Login
                     </button>
@@ -109,19 +106,19 @@ export default function Login({ Errors, setform }) {
                 <a
                     className="cursor-pointer"
                     onClick={(e) => {
-                        e.preventDefault();
-                        setform('SignUp');
+                        e.preventDefault()
+                        setform('SignUp')
                     }}
                 >
                     Don't have an Account
                 </a>
             </form>
         </div>
-    );
+    )
 }
 
 Login.defaultProps = {
     email: '',
     password: '',
     Errors: '',
-};
+}

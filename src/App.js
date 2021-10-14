@@ -7,16 +7,15 @@ import { AuthenticationContextProvider } from './Contents/AuthContext';
 function App() {
     return (
         <>
-            <Navbar />
             <AuthenticationContextProvider>
+                <Navbar />
+
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/dashboard" component={Dashboard} />
                     <Route
                         path="/login"
-                        component={() => (
-                            <Authentication Form="Login" />
-                        )}
+                        component={() => <Authentication Form="Login" />}
                     />
                 </Switch>
             </AuthenticationContextProvider>

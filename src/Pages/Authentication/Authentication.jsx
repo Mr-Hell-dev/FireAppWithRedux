@@ -23,14 +23,7 @@ export default function Authentication({ Form }) {
                     )}
                     {currentform === 'SignUp' && (
                         <>
-                            <Signup />
-                            <button
-                                onClick={() =>
-                                    setcurrentform('Login')
-                                }
-                            >
-                                Already Have an Account
-                            </button>
+                            <Signup setform={setcurrentform} />
                         </>
                     )}
                     {currentform === 'Phone_Number' && (

@@ -1,37 +1,51 @@
 import React from 'react';
-
+import { useHistory } from 'react-router';
+import { useAuthentication } from '../../Contents/AuthContext';
 export default function Navbar() {
+    const { loggedin, Logout } = useAuthentication();
+    const history = useHistory();
+    const LogMeOut = (e) => {
+        e.preventDefault();
+        Logout()
+            .then(() => alert('Signout Successfully'))
+            .catch((err) => {
+                alert('unable to logout');
+            });
+    };
     return (
         <nav className="bg-white shadow-lg sticky">
             <div className="max-w-6xl mx-auto px-4">
                 <div className="flex justify-between">
                     <div className="flex space-x-7">
                         <div>
-                            <a
-                                href="/"
-                                className="flex items-center py-4 px-2"
-                            >
+                            <a href="/" className="flex items-center py-4 px-2">
                                 <span className="font-semibold text-gray-500 text-lg">
                                     Demosite
                                 </span>
                             </a>
                         </div>
                     </div>
+                    {!loggedin && (
+                        <div className="hidden md:flex items-center space-x-3 ">
+                            <a
+                                href="/login"
+                                className="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300"
+                            >
+                                Log In/Sign Up
+                            </a>
+                        </div>
+                    )}
 
-                    <div className="hidden md:flex items-center space-x-3 ">
-                        <a
-                            href="/login"
-                            className="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300"
-                        >
-                            Log In
-                        </a>
-                        <a
-                            href="/signup"
-                            className="py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
-                        >
-                            Sign Up
-                        </a>
-                    </div>
+                    {loggedin && (
+                        <div className="hidden md:flex items-center space-x-3 ">
+                            <a
+                                onClick={LogMeOut}
+                                className="py-2 px-2 font-medium text-gray-500 cursor-pointer rounded hover:bg-green-500 hover:text-white transition duration-300"
+                            >
+                                Log out
+                            </a>
+                        </div>
+                    )}
 
                     <div className="md:hidden flex items-center">
                         <button className="outline-none mobile-menu-button">

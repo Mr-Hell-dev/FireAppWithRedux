@@ -1,38 +1,43 @@
-import {
-    createContext,
-    useState,
-    useEffect,
-    useContext,
-} from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { auth } from '../Firebase';
 import {
     signInWithEmailAndPassword,
     signInWithPhoneNumber,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
+    signOut,
 } from 'firebase/auth';
 
 const AuthenticationContext = createContext();
 
 export function AuthenticationContextProvider({ children }) {
-    const [curuser, setcuruser] = useState({});
+    const [currentUser, setcurrentUser] = useState();
+    const [loggedin, setloggedin] = useState(false);
 
     useEffect(() => {
         const unsubscriber = onAuthStateChanged(auth, (user) => {
-            setcuruser(user);
+            setcurrentUser(user);
+            if (user !== null) setloggedin(true);
         });
         return unsubscriber;
     }, []);
 
+    const Logout = () => {
+        setloggedin(false);
+        return signOut(auth);
+    };
+
     const SignInEP = (email, password) =>
         signInWithEmailAndPassword(auth, email, password);
 
-    const SignupEP = (email, password) =>
+    const SignUpEP = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
     const Values = {
-        curuser,
+        currentUser,
+        loggedin,
         SignInEP,
-        SignupEP,
+        SignUpEP,
+        Logout,
     };
 
     return (
