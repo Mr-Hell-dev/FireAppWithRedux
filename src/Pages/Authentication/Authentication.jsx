@@ -6,7 +6,6 @@ import sideimg from './images.jpg';
 import PhoneNumber from '../../Components/Authentication Forms/PhoneNumber';
 export default function Authentication({ Form }) {
     const [currentform, setcurrentform] = useState(Form);
-
     return (
         <>
             <div
