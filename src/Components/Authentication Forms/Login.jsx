@@ -109,6 +109,12 @@ export default function Login({ Errors, setform }) {
                     <p>{error}</p>
                 </div>
 
+                <div>
+                    <a className="font-medium cursor-pointer">
+                        Forgot Password?
+                    </a>
+                </div>
+
                 <div className="w-1/2 m-auto">
                     <button
                         className="bg-blue-300 hover:bg-blue-500 w-full text-xl font-bold text-white p-3 rounded"
@@ -131,7 +137,7 @@ export default function Login({ Errors, setform }) {
                     </div>
                     <div className="mt-2">
                         <button
-                            className="font-medium p-1 rounded"
+                            className="font-medium p-1 border- rounded"
                             onClick={() => {
                                 setform('Phone_Number');
                             }}
