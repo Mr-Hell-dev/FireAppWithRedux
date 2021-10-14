@@ -1,8 +1,13 @@
 // Import the functions you need from the SDKs you need
 
-import { initializeApp } from 'firebase/app'
+import { initializeApp } from 'firebase/app';
 
-import { getAuth } from 'firebase/auth'
+import {
+    getAuth,
+    RecaptchaVerifier,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+} from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,8 +20,16 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_Firebase_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_Firebase_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_Firebase_APP_ID,
-}
+};
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig)
-export const auth = getAuth()
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth();
+export const googleprovider = new GoogleAuthProvider()
+    .addScope('https://www.googleapis.com/auth/contacts.readonly')
+    .setCustomParameters({
+        login_hint: 'user@example.com',
+    });
+export const facebookprovider = new FacebookAuthProvider().addScope(
+    'https://loginproject-bb24b.firebaseapp.com/__/auth/handler'
+);

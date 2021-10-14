@@ -1,12 +1,14 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { auth } from '../Firebase';
+import { auth, googleprovider, facebookprovider } from '../Firebase';
 import {
     signInWithEmailAndPassword,
     signInWithPhoneNumber,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signOut,
+    signInWithPopup,
 } from 'firebase/auth';
+import PhoneNumber from '../Components/Authentication Forms/PhoneNumber';
 
 const AuthenticationContext = createContext();
 
@@ -27,6 +29,13 @@ export function AuthenticationContextProvider({ children }) {
         return signOut(auth);
     };
 
+    const signInWithGoogle = () => signInWithPopup(auth, googleprovider);
+    const signInWithFaceBook = () => signInWithPopup(auth, facebookprovider);
+
+    const signInWithPhone = (PhoneNo, appverify) => {
+        return signInWithPhoneNumber(auth, PhoneNo, appverify);
+    };
+
     const SignInEP = (email, password) =>
         signInWithEmailAndPassword(auth, email, password);
 
@@ -38,6 +47,9 @@ export function AuthenticationContextProvider({ children }) {
         SignInEP,
         SignUpEP,
         Logout,
+        signInWithPhone,
+        signInWithGoogle,
+        signInWithFaceBook,
     };
 
     return (

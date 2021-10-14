@@ -27,7 +27,7 @@ const validatePhone = (value) => {
 };
 const validatepassword = (value) => {
     let result = false;
-    if (value.length < 30 && value.length > 0) {
+    if (value.length < 30 && value.length > 6) {
         result = true;
     }
     return result;

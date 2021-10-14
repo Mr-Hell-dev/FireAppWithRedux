@@ -6,7 +6,6 @@ import sideimg from './images.jpg';
 import PhoneNumber from '../../Components/Authentication Forms/PhoneNumber';
 export default function Authentication({ Form }) {
     const [currentform, setcurrentform] = useState(Form);
-    const [error, setError] = useState('');
 
     return (
         <>
@@ -27,7 +26,7 @@ export default function Authentication({ Form }) {
                         </>
                     )}
                     {currentform === 'Phone_Number' && (
-                        <PhoneNumber Error={error} />
+                        <PhoneNumber setform={setcurrentform} />
                     )}
                 </section>
                 <section className="w-1/2">

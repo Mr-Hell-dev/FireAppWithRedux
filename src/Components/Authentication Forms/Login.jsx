@@ -1,55 +1,81 @@
-import React, { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
-import { SiFacebook } from 'react-icons/si'
-import { useHistory } from 'react-router'
-import { useAuthentication } from '../../Contents/AuthContext'
-import { validateEmail, validatepassword } from '../../Validations'
+import React, { useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { SiFacebook } from 'react-icons/si';
+import { useHistory } from 'react-router';
+import { useAuthentication } from '../../Contents/AuthContext';
+import { validateEmail, validatepassword } from '../../Validations';
 
 export default function Login({ Errors, setform }) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, seterror] = useState('')
-    const AuthFunctions = useAuthentication()
-    const history = useHistory()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, seterror] = useState('');
+    const AuthFunctions = useAuthentication();
+    const history = useHistory();
 
     const ChangeHandler = (e) => {
         switch (e.target.id) {
             case 'EmailId':
-                setEmail(e.target.value)
-                break
+                setEmail(e.target.value);
+                break;
             case 'Password':
-                setPassword(e.target.value)
-                break
+                setPassword(e.target.value);
+                break;
             default:
-                break
+                break;
         }
-    }
+    };
+
+    const LoginWithGoogle = (e) => {
+        e.preventDefault();
+        AuthFunctions.signInWithGoogle()
+            .then((data) => history.push('/dashboard'))
+            .catch((err) => {
+                switch (err.code) {
+                }
+            });
+    };
+    //not working
+    const LoginWithFacebook = (e) => {
+        e.preventDefault();
+        AuthFunctions.signInWithFaceBook()
+            .then((data) => history.push('/dashboard'))
+            .catch((err) => {
+                switch (err.code) {
+                    case 'auth/popup-closed-by-user':
+                        seterror('Intentionally Closed popup window');
+                        break;
+                    default:
+                        seterror('Something went wrong please try again');
+                        break;
+                }
+            });
+    };
 
     const SignInMethod = (e) => {
-        e.preventDefault()
-        seterror('')
+        e.preventDefault();
+        seterror('');
         if (validateEmail(email) && validatepassword(password)) {
             AuthFunctions.SignInEP(email, password)
                 .then((userdata) => history.push('/dashboard'))
                 .catch((err) => {
-                    console.log(err.code)
+                    console.log(err.code);
                     switch (err.code) {
                         case 'auth/invalid-email':
                         case 'auth/user-not-found':
-                            seterror('Invalid Email')
-                            break
+                            seterror('Invalid Email');
+                            break;
                         case 'auth/wrong-password':
-                            seterror('Invalid Credentails')
-                            break
+                            seterror('Invalid Credentails');
+                            break;
                         default:
-                            seterror('Something went wrong Try again')
-                            break
+                            seterror('Something went wrong Try again');
+                            break;
                     }
-                })
+                });
         } else {
-            seterror('Email and Password Field contains Incorrect values')
+            seterror('Email and Password Field contains Incorrect values');
         }
-    }
+    };
     return (
         <div className=" w-full p-3 text-center ">
             <h1 className="text-3xl text-center">Login In</h1>
@@ -94,11 +120,22 @@ export default function Login({ Errors, setform }) {
                 <p className="">Or Sign in With</p>
                 <div className="Icons w-full">
                     <div className="Icon w-1/2 space-x-5 m-auto">
-                        <FcGoogle className=" w-10 h-10 inline cursor-pointer" />
-                        <SiFacebook className="text-blue-500 w-10 cursor-pointer h-10 inline" />
+                        <FcGoogle
+                            className=" w-10 h-10 inline cursor-pointer"
+                            onClick={LoginWithGoogle}
+                        />
+                        <SiFacebook
+                            className="text-blue-500 w-10 cursor-pointer h-10 inline"
+                            onClick={LoginWithFacebook}
+                        />
                     </div>
                     <div className="mt-2">
-                        <button className="font-medium p-1 rounded">
+                        <button
+                            className="font-medium p-1 rounded"
+                            onClick={() => {
+                                setform('Phone_Number');
+                            }}
+                        >
                             Sign In With Phone
                         </button>
                     </div>
@@ -106,19 +143,19 @@ export default function Login({ Errors, setform }) {
                 <a
                     className="cursor-pointer"
                     onClick={(e) => {
-                        e.preventDefault()
-                        setform('SignUp')
+                        e.preventDefault();
+                        setform('SignUp');
                     }}
                 >
                     Don't have an Account
                 </a>
             </form>
         </div>
-    )
+    );
 }
 
 Login.defaultProps = {
     email: '',
     password: '',
     Errors: '',
-}
+};
