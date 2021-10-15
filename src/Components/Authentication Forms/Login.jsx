@@ -45,7 +45,9 @@ export default function Login({ Errors, setform }) {
                         seterror('Intentionally Closed popup window');
                         break;
                     default:
-                        seterror('Something went wrong please try again');
+                        seterror(
+                            'Something went wrong please try again',
+                        );
                         break;
                 }
             });
@@ -68,12 +70,16 @@ export default function Login({ Errors, setform }) {
                             seterror('Invalid Credentails');
                             break;
                         default:
-                            seterror('Something went wrong Try again');
+                            seterror(
+                                'Something went wrong Try again',
+                            );
                             break;
                     }
                 });
         } else {
-            seterror('Email and Password Field contains Incorrect values');
+            seterror(
+                'Email and Password Field contains Incorrect values',
+            );
         }
     };
     return (
@@ -110,9 +116,14 @@ export default function Login({ Errors, setform }) {
                 </div>
 
                 <div>
-                    <a className="font-medium cursor-pointer">
+                    <button
+                        className="font-medium cursor-pointer"
+                        onClick={() => {
+                            setform('ForgotPassword');
+                        }}
+                    >
                         Forgot Password?
-                    </a>
+                    </button>
                 </div>
 
                 <div className="w-1/2 m-auto">
@@ -146,7 +157,7 @@ export default function Login({ Errors, setform }) {
                         </button>
                     </div>
                 </div>
-                <a
+                <button
                     className="cursor-pointer"
                     onClick={(e) => {
                         e.preventDefault();
@@ -154,7 +165,7 @@ export default function Login({ Errors, setform }) {
                     }}
                 >
                     Don't have an Account
-                </a>
+                </button>
             </form>
         </div>
     );

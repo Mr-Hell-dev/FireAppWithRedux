@@ -1,4 +1,9 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import {
+    createContext,
+    useState,
+    useEffect,
+    useContext,
+} from 'react';
 import { auth, googleprovider, facebookprovider } from '../Firebase';
 import {
     signInWithEmailAndPassword,
@@ -7,8 +12,8 @@ import {
     createUserWithEmailAndPassword,
     signOut,
     signInWithPopup,
+    sendPasswordResetEmail,
 } from 'firebase/auth';
-import PhoneNumber from '../Components/Authentication Forms/PhoneNumber';
 
 const AuthenticationContext = createContext();
 
@@ -24,13 +29,18 @@ export function AuthenticationContextProvider({ children }) {
         return unsubscriber;
     }, []);
 
+    const sendPasswordResstLinkOnEmail = (email) =>
+        sendPasswordResetEmail(auth, email);
+
     const Logout = () => {
         setloggedin(false);
         return signOut(auth);
     };
 
-    const signInWithGoogle = () => signInWithPopup(auth, googleprovider);
-    const signInWithFaceBook = () => signInWithPopup(auth, facebookprovider);
+    const signInWithGoogle = () =>
+        signInWithPopup(auth, googleprovider);
+    const signInWithFaceBook = () =>
+        signInWithPopup(auth, facebookprovider);
 
     const signInWithPhone = (PhoneNo, appverify) => {
         return signInWithPhoneNumber(auth, PhoneNo, appverify);
@@ -50,6 +60,7 @@ export function AuthenticationContextProvider({ children }) {
         signInWithPhone,
         signInWithGoogle,
         signInWithFaceBook,
+        sendPasswordResstLinkOnEmail,
     };
 
     return (

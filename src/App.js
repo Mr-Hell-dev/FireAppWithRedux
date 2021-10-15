@@ -4,6 +4,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import Navbar from './Components/Navbar/Navbar';
 import Authentication from './Pages/Authentication/Authentication';
 import { AuthenticationContextProvider } from './Contents/AuthContext';
+import ProtectedRoutes from './Components/ProtectedRoutes.jsx/ProtectedRoutes';
 function App() {
     return (
         <>
@@ -12,10 +13,15 @@ function App() {
 
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/dashboard" component={Dashboard} />
+                    <ProtectedRoutes
+                        path="/dashboard"
+                        component={Dashboard}
+                    />
                     <Route
-                        path="/login"
-                        component={() => <Authentication Form="Login" />}
+                        path="/auth"
+                        component={() => (
+                            <Authentication Form="Login" />
+                        )}
                     />
                 </Switch>
             </AuthenticationContextProvider>

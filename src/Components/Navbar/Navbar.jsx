@@ -1,9 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+
 import { useAuthentication } from '../../Contents/AuthContext';
 export default function Navbar() {
     const { loggedin, Logout } = useAuthentication();
-    const history = useHistory();
+
     const LogMeOut = (e) => {
         e.preventDefault();
         Logout()
@@ -18,7 +18,10 @@ export default function Navbar() {
                 <div className="flex justify-between">
                     <div className="flex space-x-7">
                         <div>
-                            <a href="/" className="flex items-center py-4 px-2">
+                            <a
+                                href="/"
+                                className="flex items-center py-4 px-2"
+                            >
                                 <span className="font-semibold text-gray-500 text-lg">
                                     Demosite
                                 </span>
@@ -28,7 +31,7 @@ export default function Navbar() {
                     {!loggedin && (
                         <div className="hidden md:flex items-center space-x-3 ">
                             <a
-                                href="/login"
+                                href="/auth"
                                 className="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300"
                             >
                                 Log In/Sign Up
@@ -38,12 +41,12 @@ export default function Navbar() {
 
                     {loggedin && (
                         <div className="hidden md:flex items-center space-x-3 ">
-                            <a
+                            <button
                                 onClick={LogMeOut}
                                 className="py-2 px-2 font-medium text-gray-500 cursor-pointer rounded hover:bg-green-500 hover:text-white transition duration-300"
                             >
                                 Log out
-                            </a>
+                            </button>
                         </div>
                     )}
 

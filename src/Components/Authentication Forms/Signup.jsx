@@ -32,13 +32,15 @@ export default function Signup({ setform }) {
                             setError('Invalid Credentails');
                             break;
                         default:
-                            setError('Something went wrong Try again');
+                            setError(
+                                'Something went wrong Try again',
+                            );
                             break;
                     }
                 });
         } else {
             setError(
-                'Password Field contains Incorrect values or Confirm password is not same'
+                'Password Field contains Incorrect values or Confirm password is not same',
             );
         }
     };
@@ -109,7 +111,7 @@ export default function Signup({ setform }) {
                         Create Account
                     </button>
                 </div>
-                <a
+                <button
                     className="cursor-pointer"
                     onClick={(e) => {
                         e.preventDefault();
@@ -117,7 +119,7 @@ export default function Signup({ setform }) {
                     }}
                 >
                     Already have an Account
-                </a>
+                </button>
             </form>
         </div>
     );

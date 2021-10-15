@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp } from 'firebase/app';
-
+//RecaptchaVerifier
 import {
     getAuth,
-    RecaptchaVerifier,
     GoogleAuthProvider,
     FacebookAuthProvider,
 } from 'firebase/auth';
@@ -18,7 +17,8 @@ const firebaseConfig = {
     authDomain: process.env.REACT_APP_Firebase_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_Firebase_PROJECT_ID,
     storageBucket: process.env.REACT_APP_Firebase_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_Firebase_MESSAGING_SENDER_ID,
+    messagingSenderId:
+        process.env.REACT_APP_Firebase_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_Firebase_APP_ID,
 };
 
@@ -26,10 +26,10 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const googleprovider = new GoogleAuthProvider()
-    .addScope('https://www.googleapis.com/auth/contacts.readonly')
+    .addScope(process.env.REACT_APP_FIREBASE_GOOGLE_PROVIDER)
     .setCustomParameters({
         login_hint: 'user@example.com',
     });
 export const facebookprovider = new FacebookAuthProvider().addScope(
-    'https://loginproject-bb24b.firebaseapp.com/__/auth/handler'
+    process.env.REACT_APP_FIREBASE_FACEBOOK_PROVIDER,
 );
