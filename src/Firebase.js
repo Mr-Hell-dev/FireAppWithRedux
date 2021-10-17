@@ -17,9 +17,9 @@ const firebaseConfig = {
     authDomain: process.env.REACT_APP_Firebase_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_Firebase_PROJECT_ID,
     storageBucket: process.env.REACT_APP_Firebase_STORAGE_BUCKET,
-    messagingSenderId:
-        process.env.REACT_APP_Firebase_MESSAGING_SENDER_ID,
+    messagingSenderId: process.env.REACT_APP_Firebase_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_Firebase_APP_ID,
+    measurementId: process.env.REACT_APP_Firebase_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -31,5 +31,5 @@ export const googleprovider = new GoogleAuthProvider()
         login_hint: 'user@example.com',
     });
 export const facebookprovider = new FacebookAuthProvider().addScope(
-    process.env.REACT_APP_FIREBASE_FACEBOOK_PROVIDER,
+    process.env.REACT_APP_FIREBASE_FACEBOOK_PROVIDER
 );

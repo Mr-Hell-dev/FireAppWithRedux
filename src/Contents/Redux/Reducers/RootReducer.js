@@ -1,2 +1,4 @@
 import { combineReducers } from 'redux';
-export const rootReducer = combineReducers({});
+import LoginWithEmailPasswordReducer from './LoginByEmailPassword';
+const rootReducer = combineReducers({ LoginWithEmailPasswordReducer });
+export default rootReducer;

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useAuthentication } from '../../Contents/AuthContext';
 import { validateEmail, validatepassword } from '../../Validations';
+import { SignInEPWithRedux } from '../../Contents/Redux/Actions/LoginAction';
 
-export default function Login({ Errors, setform }) {
+const Login = ({ Errors, setform, LoginUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, seterror] = useState('');
@@ -45,9 +47,7 @@ export default function Login({ Errors, setform }) {
                         seterror('Intentionally Closed popup window');
                         break;
                     default:
-                        seterror(
-                            'Something went wrong please try again',
-                        );
+                        seterror('Something went wrong please try again');
                         break;
                 }
             });
@@ -70,24 +70,26 @@ export default function Login({ Errors, setform }) {
                             seterror('Invalid Credentails');
                             break;
                         default:
-                            seterror(
-                                'Something went wrong Try again',
-                            );
+                            seterror('Something went wrong Try again');
                             break;
                     }
                 });
         } else {
-            seterror(
-                'Email and Password Field contains Incorrect values',
-            );
+            seterror('Email and Password Field contains Incorrect values');
         }
     };
+
+    const SignInEmailPasswordWithRedux = (e) => {
+        e.preventDefault();
+        LoginUser(email, password);
+    };
+
     return (
         <div className=" w-full p-3 text-center ">
             <h1 className="text-3xl text-center">Login In</h1>
             <form
                 className="w-9/12 m-auto space-y-5 mt-3 p-4 bg-indigo-100 rounded-xl"
-                onSubmit={SignInMethod}
+                onSubmit={SignInEmailPasswordWithRedux}
             >
                 <div className="">
                     <input
@@ -169,10 +171,17 @@ export default function Login({ Errors, setform }) {
             </form>
         </div>
     );
-}
+};
 
 Login.defaultProps = {
     email: '',
     password: '',
     Errors: '',
 };
+
+const mapDispatchToProps = (dispatch) => ({
+    LoginUser: (email, password) =>
+        dispatch(SignInEPWithRedux(email, password, dispatch)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
