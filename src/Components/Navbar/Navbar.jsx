@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useAuthentication } from '../../Contents/AuthContext';
 export default function Navbar() {
-    const { loggedin, Logout } = useAuthentication();
+
 
     const LogMeOut = (e) => {
         e.preventDefault();

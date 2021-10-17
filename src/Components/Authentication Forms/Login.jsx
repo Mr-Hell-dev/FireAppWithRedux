@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { useAuthentication } from '../../Contents/AuthContext';
+
 import { validateEmail, validatepassword } from '../../Validations';
 import { SignInEPWithRedux } from '../../Contents/Redux/Actions/LoginAction';
 
@@ -11,7 +11,7 @@ const Login = ({ Errors, setform, LoginUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, seterror] = useState('');
-    const AuthFunctions = useAuthentication();
+
     const history = useHistory();
 
     const ChangeHandler = (e) => {

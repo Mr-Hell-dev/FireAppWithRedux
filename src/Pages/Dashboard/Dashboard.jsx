@@ -1,8 +1,8 @@
 import React from 'react'
-import { useAuthentication } from '../../Contents/AuthContext'
+
 
 export default function Dashboard() {
-    const { loggedin: isloggedin } = useAuthentication()
+  
     return (
         <>
             {isloggedin ? (

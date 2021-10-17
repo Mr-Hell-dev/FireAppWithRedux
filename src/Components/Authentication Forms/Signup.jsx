@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { validateEmail, validatepassword } from '../../Validations';
-import { useAuthentication } from '../../Contents/AuthContext';
+
 import { useHistory } from 'react-router';
 export default function Signup({ setform }) {
-    const authContext = useAuthentication();
+
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();

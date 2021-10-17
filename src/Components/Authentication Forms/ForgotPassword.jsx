@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { validateEmail } from '../../Validations';
-import { useAuthentication } from '../../Contents/AuthContext';
+
 
 export default function ForgotPassword() {
     const EmailField = useRef(null);
     const [error, setError] = useState('');
-    const { sendPasswordResstLinkOnEmail } = useAuthentication();
+
 
     const ResetPassword = (e) => {
         setError('');

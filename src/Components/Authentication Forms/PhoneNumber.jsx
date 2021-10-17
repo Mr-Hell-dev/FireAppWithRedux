@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { auth } from '../../Firebase';
 import { RecaptchaVerifier } from '@firebase/auth';
-import { useAuthentication } from '../../Contents/AuthContext';
+
 export default function PhoneNumber() {
     const [phoneNumber, setphoneNumber] = useState('');
     const [error, setError] = useState('');
-    const authContext = useAuthentication();
+
     const recaptchaconfig = new RecaptchaVerifier(
         'recaptcha-container',
         {
