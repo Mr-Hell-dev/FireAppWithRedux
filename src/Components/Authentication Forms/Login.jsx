@@ -3,7 +3,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-
 import { validateEmail, validatepassword } from '../../Validations';
 import { SignInEPWithRedux } from '../../Contents/Redux/Actions/LoginAction';
 
@@ -27,61 +26,68 @@ const Login = ({ Errors, setform, LoginUser }) => {
         }
     };
 
-    const LoginWithGoogle = (e) => {
-        e.preventDefault();
-        AuthFunctions.signInWithGoogle()
-            .then((data) => history.push('/dashboard'))
-            .catch((err) => {
-                switch (err.code) {
-                }
-            });
-    };
+    // const LoginWithGoogle = (e) => {
+    //     e.preventDefault();
+    //     signInWithGoogle()
+    //         .then((data) => history.push('/dashboard'))
+    //         .catch((err) => {
+    //             switch (err.code) {
+    //             }
+    //         });
+    // };
     //not working
-    const LoginWithFacebook = (e) => {
-        e.preventDefault();
-        AuthFunctions.signInWithFaceBook()
-            .then((data) => history.push('/dashboard'))
-            .catch((err) => {
-                switch (err.code) {
-                    case 'auth/popup-closed-by-user':
-                        seterror('Intentionally Closed popup window');
-                        break;
-                    default:
-                        seterror('Something went wrong please try again');
-                        break;
-                }
-            });
-    };
+    // const LoginWithFacebook = (e) => {
+    //     e.preventDefault();
+    //     signInWithFaceBook()
+    //         .then((data) => history.push('/dashboard'))
+    //         .catch((err) => {
+    //             switch (err.code) {
+    //                 case 'auth/popup-closed-by-user':
+    //                     seterror('Intentionally Closed popup window');
+    //                     break;
+    //                 default:
+    //                     seterror(
+    //                         'Something went wrong please try again',
+    //                     );
+    //                     break;
+    //             }
+    //         });
+    // };
 
-    const SignInMethod = (e) => {
-        e.preventDefault();
-        seterror('');
-        if (validateEmail(email) && validatepassword(password)) {
-            AuthFunctions.SignInEP(email, password)
-                .then((userdata) => history.push('/dashboard'))
-                .catch((err) => {
-                    console.log(err.code);
-                    switch (err.code) {
-                        case 'auth/invalid-email':
-                        case 'auth/user-not-found':
-                            seterror('Invalid Email');
-                            break;
-                        case 'auth/wrong-password':
-                            seterror('Invalid Credentails');
-                            break;
-                        default:
-                            seterror('Something went wrong Try again');
-                            break;
-                    }
-                });
-        } else {
-            seterror('Email and Password Field contains Incorrect values');
-        }
-    };
+    // const SignInMethod = (e) => {
+    //     e.preventDefault();
+    //     seterror('');
+    //     if (validateEmail(email) && validatepassword(password)) {
+    //         SignInEP(email, password)
+    //             .then((userdata) => history.push('/dashboard'))
+    //             .catch((err) => {
+    //                 console.log(err.code);
+    //                 switch (err.code) {
+    //                     case 'auth/invalid-email':
+    //                     case 'auth/user-not-found':
+    //                         seterror('Invalid Email');
+    //                         break;
+    //                     case 'auth/wrong-password':
+    //                         seterror('Invalid Credentails');
+    //                         break;
+    //                     default:
+    //                         seterror(
+    //                             'Something went wrong Try again',
+    //                         );
+    //                         break;
+    //                 }
+    //             });
+    //     } else {
+    //         seterror(
+    //             'Email and Password Field contains Incorrect values',
+    //         );
+    //     }
+    // };
 
     const SignInEmailPasswordWithRedux = (e) => {
         e.preventDefault();
         LoginUser(email, password);
+
     };
 
     return (
@@ -141,11 +147,11 @@ const Login = ({ Errors, setform, LoginUser }) => {
                     <div className="Icon w-1/2 space-x-5 m-auto">
                         <FcGoogle
                             className=" w-10 h-10 inline cursor-pointer"
-                            onClick={LoginWithGoogle}
+                            // onClick={LoginWithGoogle}
                         />
                         <SiFacebook
                             className="text-blue-500 w-10 cursor-pointer h-10 inline"
-                            onClick={LoginWithFacebook}
+                            // onClick={LoginWithFacebook}
                         />
                     </div>
                     <div className="mt-2">
@@ -184,4 +190,9 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(SignInEPWithRedux(email, password, dispatch)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) =>
+({
+    user:state.
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

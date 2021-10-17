@@ -18,10 +18,15 @@ export default function PhoneNumber() {
         auth
     );
 
+
+    const signInWithPhone = (phone,recaptcha) =>
+    {
+        //need woring here
+    }
+
     const OnSignInClick = (e) => {
         e.preventDefault();
-        authContext
-            .signInWithPhone('+91' + phoneNumber, recaptchaconfig)
+            signInWithPhone('+91' + phoneNumber, recaptchaconfig)
             .then((response) => console.log('Sms Sent' + response))
             .catch((err) => setError(err));
     };

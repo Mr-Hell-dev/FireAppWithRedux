@@ -5,6 +5,10 @@ import { validateEmail } from '../../Validations';
 export default function ForgotPassword() {
     const EmailField = useRef(null);
     const [error, setError] = useState('');
+    const sendPasswordResstLinkOnEmail = (email) => 
+    {
+        //need working here
+    }
 
 
     const ResetPassword = (e) => {

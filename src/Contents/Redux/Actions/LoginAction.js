@@ -10,24 +10,31 @@ export const Begin_Login_Request_With_Email_Password = () => {
 export const Login_Request_success_With_Email_Password = (user) => {
     return {
         type: 'LOGIN_REQUEST_SUCCESS_WITH_EMAIL_PASSWORD',
-        User: user,
+        UserObj: user,
     };
 };
 
 export const Login_Request_Failure_With_Email_Password = (err) => {
     return {
         type: 'LOGIN_REQUEST_FAILURE_WITH_EMAIL_PASSWORD',
-        error: err,
+        ErrorObj: err,
     };
 };
 
-export const SignInEPWithRedux = async (email, password, dispatch) => {
+export const SignInEPWithRedux = async (
+    email,
+    password,
+    dispatch,
+) => {
     dispatch(Begin_Login_Request_With_Email_Password());
     await signInWithEmailAndPassword(auth, email, password)
         .then((user) =>
-            dispatch(Login_Request_success_With_Email_Password(user))
+            dispatch(Login_Request_success_With_Email_Password(user)),
         )
-        .catch((err) =>
-            dispatch(Login_Request_Failure_With_Email_Password(err))
-        );
+        .catch((err) => {
+            console.log(err);
+            return dispatch(
+                Login_Request_Failure_With_Email_Password(err),
+            );
+        });
 };

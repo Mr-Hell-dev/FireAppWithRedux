@@ -10,6 +10,12 @@ export default function Signup({ setform }) {
     const [error, setError] = useState('');
     const history = useHistory();
 
+    const  SignUpEP = (email, password) =>
+    {
+        //need working here
+    }
+
+
     const SignupMethod = (e) => {
         e.preventDefault();
         setError('');
@@ -18,8 +24,8 @@ export default function Signup({ setform }) {
             validatepassword(password) &&
             password === confirmPassword
         ) {
-            authContext
-                .SignUpEP(email, password)
+           
+                SignUpEP(email, password)
                 .then((userdata) => history.push('/dashboard'))
                 .catch((err) => {
                     console.log(err.code);

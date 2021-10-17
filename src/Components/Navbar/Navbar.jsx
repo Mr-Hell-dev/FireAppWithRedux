@@ -2,6 +2,11 @@ import React from 'react';
 
 export default function Navbar() {
 
+    const  Logout = () =>
+    {
+        //need working here
+    }
+    const  loggedin = false;
 
     const LogMeOut = (e) => {
         e.preventDefault();
