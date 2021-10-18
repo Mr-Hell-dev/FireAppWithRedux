@@ -203,7 +203,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    errormsg: state.LoginWithEmailPasswordReducer.Err.message,
+    errormsg: state.LoginReducer.Err.message,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
