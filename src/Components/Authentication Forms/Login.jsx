@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { validateEmail, validatepassword } from '../../Validations';
 import { SignInEPWithRedux } from '../../Contents/Redux/Actions/LoginAction';
 
-const Login = ({ setform, LoginUser }) => {
+const Login = ({ setform, LoginUser, errormsg }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, seterror] = useState('');
@@ -86,16 +86,19 @@ const Login = ({ setform, LoginUser }) => {
 
     const SignInEmailPasswordWithRedux = (e) => {
         e.preventDefault();
-        try {
-            if (validateEmail(email) && validatepassword(password)) {
-                LoginUser(email, password)
-                    .then(() => history.replace('/dashboard'))
-                    .catch((err) => seterror(err));
-            } else {
-                seterror('Invalid email and password');
+        if ((validateEmail(email), validatepassword(password))) {
+            try {
+                LoginUser(email, password);
+                setTimeout(() => {
+                    if (!errormsg) {
+                        history.push('/dashboard');
+                    }
+                }, 3000);
+            } catch (err) {
+                seterror(err.message);
             }
-        } catch (err) {
-            console.log(err);
+        } else {
+            seterror('Invalid email password value provided');
         }
     };
 
@@ -199,4 +202,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(SignInEPWithRedux(email, password, dispatch)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => ({
+    errormsg: state.LoginWithEmailPasswordReducer.Err.message,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

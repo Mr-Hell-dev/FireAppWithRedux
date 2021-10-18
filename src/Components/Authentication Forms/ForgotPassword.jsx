@@ -54,16 +54,18 @@ export default function ForgotPassword({ setform }) {
                         Reset
                     </button>
                 </div>
+            </form>
+            <div className="mt-2">
                 <button
-                    className="cursor-pointer"
+                    className="font-medium p-1 border- rounded"
                     onClick={(e) => {
                         e.preventDefault();
-                        setform('SignUp');
+                        setform('Login');
                     }}
                 >
-                    Back To Login
+                    Login
                 </button>
-            </form>
+            </div>
         </div>
     );
 }
