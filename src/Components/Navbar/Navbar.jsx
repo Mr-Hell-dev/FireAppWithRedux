@@ -1,20 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { SignOutEPWithRedux } from '../../Contents/Redux/Actions/LogoutAction';
 
-export default function Navbar() {
-
-    const  Logout = () =>
-    {
-        //need working here
-    }
-    const  loggedin = false;
-
-    const LogMeOut = (e) => {
+function Navbar({ LoggedIn, LogoutMe: LogMeOut }) {
+    const loggedin = LoggedIn;
+    const LogOut = (e) => {
         e.preventDefault();
-        Logout()
-            .then(() => alert('Signout Successfully'))
-            .catch((err) => {
-                alert('unable to logout');
-            });
+        LogMeOut();
     };
     return (
         <nav className="bg-white shadow-lg sticky">
@@ -22,10 +14,7 @@ export default function Navbar() {
                 <div className="flex justify-between">
                     <div className="flex space-x-7">
                         <div>
-                            <a
-                                href="/"
-                                className="flex items-center py-4 px-2"
-                            >
+                            <a href="/" className="flex items-center py-4 px-2">
                                 <span className="font-semibold text-gray-500 text-lg">
                                     Demosite
                                 </span>
@@ -46,7 +35,7 @@ export default function Navbar() {
                     {loggedin && (
                         <div className="hidden md:flex items-center space-x-3 ">
                             <button
-                                onClick={LogMeOut}
+                                onClick={LogOut}
                                 className="py-2 px-2 font-medium text-gray-500 cursor-pointer rounded hover:bg-green-500 hover:text-white transition duration-300"
                             >
                                 Log out
@@ -111,3 +100,13 @@ export default function Navbar() {
         </nav>
     );
 }
+
+const mapStateToProps = (state) => ({
+    LoggedIn: state.LoginWithEmailPasswordReducer.LoggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    LogoutMe: () => dispatch(SignOutEPWithRedux()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

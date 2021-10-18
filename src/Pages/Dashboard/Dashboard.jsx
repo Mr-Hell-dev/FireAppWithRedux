@@ -1,17 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default function Dashboard() {
-    const isloggedin = false;
+function Dashboard({ LoggedIn }) {
     return (
         <>
-            {isloggedin ? (
-                <h1 className="">This is dashboard boi</h1>
+            {LoggedIn ? (
+                <h1>This is Dashboard boi</h1>
             ) : (
-                <div>
-                    You are not authorised to view this page please
-                    login
-                </div>
+                <h1>You are not allowed to be here</h1>
             )}
         </>
     );
 }
+
+const mapStateToProps = (state) => ({
+    LoggedIn: state.LoginWithEmailPasswordReducer.LoggedIn,
+});
+
+export default connect(mapStateToProps, null)(Dashboard);

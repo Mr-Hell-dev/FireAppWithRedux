@@ -1,18 +1,20 @@
 const initialStateForLoginWithEmailPassword = {
     isLoading: false,
+    LoggedIn: false,
     User: {},
     Err: '',
 };
 
 const LoginWithEmailPasswordReducer = (
     state = initialStateForLoginWithEmailPassword,
-    action,
+    action
 ) => {
     switch (action.type) {
         case 'BEGIN_LOGIN_REQUEST_WITH_EMAIL_PASSWORD':
             return {
                 ...state,
                 isLoading: true,
+                LoggedIn: false,
             };
         case 'LOGIN_REQUEST_SUCCESS_WITH_EMAIL_PASSWORD':
             return {
@@ -20,6 +22,7 @@ const LoginWithEmailPasswordReducer = (
                 isLoading: false,
                 User: action.UserObj.user,
                 Err: '',
+                LoggedIn: true,
             };
         case 'LOGIN_REQUEST_FAILURE_WITH_EMAIL_PASSWORD':
             return {

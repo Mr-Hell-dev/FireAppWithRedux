@@ -10,18 +10,17 @@ import ProtectedRoutes from './Components/ProtectedRoutes.jsx/ProtectedRoutes';
 function App() {
     return (
         <>
-           
             <Provider store={store}>
+                <Navbar />
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    {/* <ProtectedRoutes path="/dashboard" component={Dashboard} /> */}
+                    <ProtectedRoutes path="/dashboard" component={Dashboard} />
                     <Route
                         path="/auth"
                         component={() => <Authentication Form="Login" />}
                     />
                 </Switch>
             </Provider>
-            
         </>
     );
 }

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
+import { connect } from 'react-redux';
 
-export default function ProtectedRoutes({
-    component: Component,
-    ...restprops
-}) {
-    const loggedin = false;
+function ProtectedRoutes({ component: Component, user, ...restprops }) {
+    const loggedin = user ? true : false;
     return (
         <>
             <Route
@@ -21,3 +19,9 @@ export default function ProtectedRoutes({
         </>
     );
 }
+
+const mapStateToProps = (state) => ({
+    user: state.LoginWithEmailPasswordReducer.User,
+});
+
+export default connect(mapStateToProps, null)(ProtectedRoutes);

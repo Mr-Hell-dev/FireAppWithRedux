@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { validateEmail } from '../../Validations';
 
-
-export default function ForgotPassword() {
+export default function ForgotPassword({ setform }) {
     const EmailField = useRef(null);
     const [error, setError] = useState('');
-    const sendPasswordResstLinkOnEmail = (email) => 
-    {
+    const sendPasswordResstLinkOnEmail = (email) => {
         //need working here
-    }
-
+    };
 
     const ResetPassword = (e) => {
         setError('');
@@ -58,6 +55,17 @@ export default function ForgotPassword() {
                     </button>
                 </div>
             </form>
+            <div className="mt-2">
+                <button
+                    className="font-medium p-1 border- rounded"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setform('Login');
+                    }}
+                >
+                    Login
+                </button>
+            </div>
         </div>
     );
 }
