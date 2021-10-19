@@ -30,24 +30,48 @@ const LoginReducer = (state = initialStateForLogin, action) => {
             };
         //Logout Actions
 
-        case 'LOGIN/BEGIN_LOGOUT_REQUEST_WITH_EMAIL_PASSWORD':
+        case 'LOGOUT/BEGIN_LOGOUT_REQUEST_WITH_EMAIL_PASSWORD':
             return {
                 ...state,
                 isLoading: true,
                 LoggedIn: true,
             };
-        case 'LOGIN/LOGOUT_REQUEST_SUCCESS_WITH_EMAIL_PASSWORD':
+        case 'LOGOUT/LOGOUT_REQUEST_SUCCESS_WITH_EMAIL_PASSWORD':
             return {
                 ...state,
                 User: undefined,
                 isLoading: false,
                 LoggedIn: false,
             };
-        case 'LOGIN/LOGOUT_REQUEST_FAILURE_WITH_EMAIL_PASSWORD':
+        case 'LOGOUT/LOGOUT_REQUEST_FAILURE_WITH_EMAIL_PASSWORD':
             return {
                 ...state,
                 isLoading: false,
                 LoggedIn: true,
+                Err: action.ErrorObj.code,
+            };
+
+        // SignUP
+        case 'SignUp/Begin_SignUp_Request_With_Email_Password':
+            return {
+                ...state,
+                isLoading: true,
+                LoggedIn: false,
+            };
+
+        case 'SignUp/SignUp_Request_success_With_Email_Password':
+            return {
+                ...state,
+                User: action.UserObj.user,
+                isLoading: false,
+                LoggedIn: true,
+            };
+        case 'SignUp/Begin_Signup_Request_With_Email_Password':
+            return {
+                ...state,
+                User: undefined,
+                isLoading: false,
+                LoggedIn: false,
                 Err: action.ErrorObj.code,
             };
         default:

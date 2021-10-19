@@ -1,34 +1,30 @@
 import React, { useState } from 'react';
 import { auth } from '../../Firebase';
-import { RecaptchaVerifier } from '@firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber } from '@firebase/auth';
 
 export default function PhoneNumber() {
     const [phoneNumber, setphoneNumber] = useState('');
     const [error, setError] = useState('');
 
-    const recaptchaconfig = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-            size: 'invisible',
-            callback: (response) => {
-                console.log('recaptcha resolved');
-                OnSignInClick();
+    const recaptchaconfig = () => {
+        window.RecaptchaVerifier = new RecaptchaVerifier(
+            'recaptcha-container',
+            {
+                size: 'invisible',
+                callback: (response) => {
+                    console.log('recaptcha resolved');
+                    return OnSignInClick();
+                },
             },
-        },
-        auth
-    );
-
-
-    const signInWithPhone = (phone,recaptcha) =>
-    {
-        //need woring here
-    }
-
-    const OnSignInClick = (e) => {
-        e.preventDefault();
-            signInWithPhone('+91' + phoneNumber, recaptchaconfig)
+            auth
+        );
+    };
+    const OnSignInClick = () => {
+        recaptchaconfig();
+        const PhoneNo = '+91' + phoneNumber;
+        signInWithPhoneNumber(auth, '+11234567890', window.RecaptchaVerifier)
             .then((response) => console.log('Sms Sent' + response))
-            .catch((err) => setError(err));
+            .catch((err) => console.log(err));
     };
 
     const ChangeHandler = (e) => {
@@ -40,7 +36,13 @@ export default function PhoneNumber() {
     return (
         <div className=" w-full p-3 text-center ">
             <h1 className="text-3xl text-center">Sign In With Phone Number</h1>
-            <form className="w-9/12 m-auto space-y-5 mt-3 p-4 bg-indigo-100 rounded-xl">
+            <form
+                className="w-9/12 m-auto space-y-5 mt-3 p-4 bg-indigo-100 rounded-xl"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    OnSignInClick();
+                }}
+            >
                 <div id="recaptcha-container"></div>
                 <div>
                     <input
@@ -61,7 +63,6 @@ export default function PhoneNumber() {
                     <button
                         className="bg-blue-300 hover:bg-blue-500 w-full text-xl font-bold text-white p-3 rounded"
                         type="Submit"
-                        onClick={OnSignInClick}
                     >
                         Get Otp
                     </button>

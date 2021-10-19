@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { validateEmail, validatepassword } from '../../Validations';
+import { SignUpEP } from '../../Contents/Redux/Actions/SignUp';
+import { connect } from 'react-redux';
 
 import { useHistory } from 'react-router';
-export default function Signup({ setform }) {
-
+function Signup({ setform, CreateAccount, Err: errormsg }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
     const [error, setError] = useState('');
     const history = useHistory();
-
-    const  SignUpEP = (email, password) =>
-    {
-        //need working here
-    }
-
 
     const SignupMethod = (e) => {
         e.preventDefault();
@@ -24,29 +19,15 @@ export default function Signup({ setform }) {
             validatepassword(password) &&
             password === confirmPassword
         ) {
-           
-                SignUpEP(email, password)
-                .then((userdata) => history.push('/dashboard'))
-                .catch((err) => {
-                    console.log(err.code);
-                    switch (err.code) {
-                        case 'auth/invalid-email':
-                        case 'auth/user-not-found':
-                            setError('Invalid Email');
-                            break;
-                        case 'auth/wrong-password':
-                            setError('Invalid Credentails');
-                            break;
-                        default:
-                            setError(
-                                'Something went wrong Try again',
-                            );
-                            break;
-                    }
-                });
+            CreateAccount(email, password);
+            setTimeout(() => {
+                if (!errormsg) {
+                    history.push('/dashboard');
+                }
+            }, 3000);
         } else {
             setError(
-                'Password Field contains Incorrect values or Confirm password is not same',
+                'Password Field contains Incorrect values or Confirm password is not same'
             );
         }
     };
@@ -130,3 +111,12 @@ export default function Signup({ setform }) {
         </div>
     );
 }
+const mapDispatchToProps = (dispatch) => ({
+    CreateAccount: (email, password) => dispatch(SignUpEP(email, password)),
+});
+
+const mapStateToProps = (state) => ({
+    Err: state.LoginReducer.Err,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

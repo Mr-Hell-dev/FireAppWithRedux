@@ -1,0 +1,5 @@
+{
+    "prettier.configPath": "C:\\Users\\Admin\\prettier.config.js",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+}
