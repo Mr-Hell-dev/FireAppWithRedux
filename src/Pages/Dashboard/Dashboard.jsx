@@ -14,7 +14,7 @@ function Dashboard({ LoggedIn }) {
 }
 
 const mapStateToProps = (state) => ({
-    LoggedIn: state.LoginWithEmailPasswordReducer.LoggedIn,
+    LoggedIn: state.LoginReducer.LoggedIn,
 });
 
 export default connect(mapStateToProps, null)(Dashboard);

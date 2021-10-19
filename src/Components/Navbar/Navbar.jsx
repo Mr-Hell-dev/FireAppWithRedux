@@ -14,7 +14,10 @@ function Navbar({ LoggedIn, LogoutMe: LogMeOut }) {
                 <div className="flex justify-between">
                     <div className="flex space-x-7">
                         <div>
-                            <a href="/" className="flex items-center py-4 px-2">
+                            <a
+                                href="/"
+                                className="flex items-center py-4 px-2"
+                            >
                                 <span className="font-semibold text-gray-500 text-lg">
                                     Demosite
                                 </span>
@@ -102,7 +105,7 @@ function Navbar({ LoggedIn, LogoutMe: LogMeOut }) {
 }
 
 const mapStateToProps = (state) => ({
-    LoggedIn: state.LoginWithEmailPasswordReducer.LoggedIn,
+    LoggedIn: state.LoginReducer.LoggedIn,
 });
 
 const mapDispatchToProps = (dispatch) => ({
