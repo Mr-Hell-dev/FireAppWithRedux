@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { auth } from '../../Firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from '@firebase/auth';
 
@@ -19,11 +19,15 @@ export default function PhoneNumber() {
             auth
         );
     };
+
     const OnSignInClick = () => {
-        recaptchaconfig();
         const PhoneNo = '+91' + phoneNumber;
-        signInWithPhoneNumber(auth, '+11234567890', window.RecaptchaVerifier)
-            .then((response) => console.log('Sms Sent' + response))
+        signInWithPhoneNumber(auth, PhoneNo, window.RecaptchaVerifier)
+            .then((response) => {
+                console.log('Sms Sent' + response);
+                window.RecaptchaVerifier = undefined;
+            })
+
             .catch((err) => console.log(err));
     };
 
