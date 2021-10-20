@@ -6,7 +6,7 @@ import Authentication from './Pages/Authentication/Authentication';
 
 import { Provider } from 'react-redux';
 import store from './store';
-import ProtectedRoutes from './Components/ProtectedRoutes.jsx/ProtectedRoutes';
+import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 function App() {
     return (
         <>

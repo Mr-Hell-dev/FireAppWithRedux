@@ -10,17 +10,12 @@ function Dashboard({ LoggedIn }) {
             .then((res) => res.json())
             .then((data) => setDataforAg(data))
             .catch((err) => console.log(err));
-    });
-
+    }, []);
     return (
         <>
-            {LoggedIn ? (
-                <Suspense fallback={<div> Please wait </div>}>
-                    <AgGrid data={DataforAg} />
-                </Suspense>
-            ) : (
-                <h1>You are not allowed to be here</h1>
-            )}
+            <Suspense fallback={<div> Please wait </div>}>
+                <AgGrid data={DataforAg} />
+            </Suspense>
         </>
     );
 }
