@@ -7,6 +7,24 @@ const initialStateForLogin = {
 
 const LoginReducer = (state = initialStateForLogin, action) => {
     switch (action.type) {
+        // Initailization
+
+        case 'INITIAL/INITAILIZATION':
+            return {
+                ...state,
+                User: action.UserObj.user,
+                LoggedIn: true,
+            };
+        case 'INITIAL/INITAILIZATIONFAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                User: '',
+                LoggedIn: false,
+                Err: action.ErrorObj,
+            };
+
+        //Login with Email And Password
         case 'LOGIN/BEGIN_LOGIN_REQUEST_WITH_EMAIL_PASSWORD':
             return {
                 ...state,
@@ -26,7 +44,8 @@ const LoginReducer = (state = initialStateForLogin, action) => {
                 ...state,
                 isLoading: false,
                 User: '',
-                Err: action.ErrorObj.code,
+                LoggedIn: false,
+                Err: action.ErrorObj,
             };
         //Logout Actions
 
@@ -48,7 +67,7 @@ const LoginReducer = (state = initialStateForLogin, action) => {
                 ...state,
                 isLoading: false,
                 LoggedIn: true,
-                Err: action.ErrorObj.code,
+                Err: action.ErrorObj,
             };
 
         // SignUP
@@ -72,7 +91,7 @@ const LoginReducer = (state = initialStateForLogin, action) => {
                 User: undefined,
                 isLoading: false,
                 LoggedIn: false,
-                Err: action.ErrorObj.code,
+                Err: action.ErrorObj,
             };
         default:
             return { ...state };

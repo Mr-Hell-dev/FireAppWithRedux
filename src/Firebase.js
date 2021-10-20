@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp } from 'firebase/app';
-//
+import { getFirestore } from 'firebase/firestore';
 import {
     getAuth,
     GoogleAuthProvider,
@@ -23,7 +23,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth();
+
 export const googleprovider = new GoogleAuthProvider()
     .addScope(process.env.REACT_APP_FIREBASE_GOOGLE_PROVIDER)
     .setCustomParameters({
@@ -32,3 +34,4 @@ export const googleprovider = new GoogleAuthProvider()
 export const facebookprovider = new FacebookAuthProvider().addScope(
     process.env.REACT_APP_FIREBASE_FACEBOOK_PROVIDER
 );
+export const fireStorage = getFirestore();

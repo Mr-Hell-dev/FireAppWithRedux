@@ -90,9 +90,7 @@ const Login = ({ setform, LoginUser, errormsg }) => {
             try {
                 LoginUser(email, password);
                 setTimeout(() => {
-                    if (!errormsg) {
-                        history.push('/dashboard');
-                    }
+                    history.push('/dashboard');
                 }, 3000);
             } catch (err) {
                 seterror(err.message);

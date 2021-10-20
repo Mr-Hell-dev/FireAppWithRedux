@@ -6,23 +6,41 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 export default function AgGrid({ data }) {
     const colums = [
-        { headerName: 'UserId', field: 'userId', checkboxSelection: true },
-        { headerName: 'Id', field: 'id' },
-        { headerName: 'Title', field: 'title' },
-        { headerName: 'Completed', field: 'completed' },
+        {
+            headerName: 'PostId',
+            field: 'postId',
+            checkboxSelection: true,
+            cellStyle: (params) =>
+                params.value > 1
+                    ? { background: 'green' }
+                    : { background: 'red' },
+            tooltipField: 'email',
+        },
+        { headerName: 'Email', field: 'email' },
+        { headerName: 'PostName', field: 'name', tooltipField: 'email' },
+        { headerName: 'Body', field: 'body', tooltipField: 'email' },
     ];
     const defaultColumns = {
         sortable: true,
         filter: true,
         editable: true,
+        flex: 1,
+        floatingFilter: true,
     };
 
     return (
-        <div className="ag-theme-alpine h-96 ">
+        <div
+            className="ag-theme-alpine"
+            style={{ width: '100%', height: '80vh' }}
+        >
             <AgGridReact
                 rowData={data}
                 columnDefs={colums}
                 defaultColDef={defaultColumns}
+                rowSelection={'multiple'}
+                pagination={'true'}
+                enableBrowserTooltip={'true'}
+                tooltipShowDelay={{ tooltipShowDelay: 3 }}
             />
         </div>
     );

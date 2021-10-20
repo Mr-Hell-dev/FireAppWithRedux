@@ -2,7 +2,12 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-function ProtectedRoutes({ component: Component, isLoggedIn, ...restprops }) {
+function ProtectedRoutes({
+    component: Component,
+    User,
+    isLoggedIn,
+    ...restprops
+}) {
     const loggedin = isLoggedIn;
     return (
         <>
@@ -22,6 +27,7 @@ function ProtectedRoutes({ component: Component, isLoggedIn, ...restprops }) {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.LoginReducer.LoggedIn,
+    User: state.LoginReducer.User,
 });
 
 export default connect(mapStateToProps, null)(ProtectedRoutes);

@@ -23,7 +23,10 @@ export const Logout_Request_Failure_With_Email_Password = (err) => {
 export const SignOutEPWithRedux = () => (dispatch) => {
     dispatch(Begin_Logout_Request_With_Email_Password());
     signOut(auth)
-        .then(() => dispatch(Logout_Request_success_With_Email_Password()))
+        .then(() => {
+            localStorage.removeItem('IdToken');
+            return dispatch(Logout_Request_success_With_Email_Password());
+        })
         .catch((err) => {
             dispatch(Logout_Request_Failure_With_Email_Password(err));
         });

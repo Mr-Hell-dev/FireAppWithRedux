@@ -25,7 +25,7 @@ export const SignInEPWithRedux = (email, password) => (dispatch) => {
     dispatch(Begin_Login_Request_With_Email_Password());
     signInWithEmailAndPassword(auth, email, password)
         .then((user) =>
-            dispatch(Login_Request_success_With_Email_Password(user)),
+            dispatch(Login_Request_success_With_Email_Password(user))
         )
         .catch((err) => {
             dispatch(Login_Request_Failure_With_Email_Password(err));

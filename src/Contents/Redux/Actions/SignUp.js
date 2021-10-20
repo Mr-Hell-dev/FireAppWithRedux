@@ -17,9 +17,14 @@ export const Begin_Signup_Request_With_Email_Password = (err) => ({
 export const SignUpEP = (email, password) => (dispatch) => {
     dispatch(Begin_SignUp_Request_With_Email_Password());
     createUserWithEmailAndPassword(auth, email, password)
-        .then((user) =>
-            dispatch(Signup_Request_success_With_Email_Password(user))
-        )
+        .then((user) => {
+            user.getIdToken()
+                .then((data) => localStorage.setItem('IdToken', data))
+                .catch((err) => {
+                    throw new Error('LocalStorage cannot be accessible');
+                });
+            return dispatch(Signup_Request_success_With_Email_Password(user));
+        })
         .catch((err) =>
             dispatch(Begin_Signup_Request_With_Email_Password(err))
         );
