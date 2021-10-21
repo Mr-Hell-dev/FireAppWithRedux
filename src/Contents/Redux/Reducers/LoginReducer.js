@@ -23,6 +23,13 @@ const LoginReducer = (state = initialStateForLogin, action) => {
                 LoggedIn: false,
                 Err: action.ErrorObj,
             };
+        //Login with Phone Number
+
+        case 'LOGIN/BEGIN_LOGIN_REQUEST_WITH_Phone_Number':
+            return {
+                ...state,
+                isLoading: true,
+            };
 
         //Login with Email And Password
         case 'LOGIN/BEGIN_LOGIN_REQUEST_WITH_EMAIL_PASSWORD':

@@ -14,7 +14,7 @@ export const InitializerRedux = () => (dispatch) => {
     } else {
         dispatch(
             InitializeReduxStateFaliure({
-                code: 'authUser_Not_logged_in',
+                code: 'auth/User_Not_logged_in',
                 message: 'You is not Logged in',
             })
         );

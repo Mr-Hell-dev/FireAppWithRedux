@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { connect } from 'react-redux';
@@ -54,44 +54,30 @@ const Login = ({ setform, LoginUser, errormsg }) => {
     //         });
     // };
 
-    // const SignInMethod = (e) => {
-    //     e.preventDefault();
-    //     seterror('');
-    //     if (validateEmail(email) && validatepassword(password)) {
-    //         SignInEP(email, password)
-    //             .then((userdata) => history.push('/dashboard'))
-    //             .catch((err) => {
-    //                 console.log(err.code);
-    //                 switch (err.code) {
-    //                     case 'auth/invalid-email':
-    //                     case 'auth/user-not-found':
-    //                         seterror('Invalid Email');
-    //                         break;
-    //                     case 'auth/wrong-password':
-    //                         seterror('Invalid Credentails');
-    //                         break;
-    //                     default:
-    //                         seterror(
-    //                             'Something went wrong Try again',
-    //                         );
-    //                         break;
-    //                 }
-    //             });
-    //     } else {
-    //         seterror(
-    //             'Email and Password Field contains Incorrect values',
-    //         );
-    //     }
-    // };
+    const setErr = useCallback(() => {
+        switch (errormsg) {
+            case 'auth/invalid-email':
+            case 'auth/user-not-found':
+                seterror('Invalid Email');
+                break;
+            case 'auth/wrong-password':
+                seterror('Invalid Credentails');
+                break;
+            default:
+                seterror('Something went wrong Try again');
+                break;
+        }
+    }, [errormsg]);
 
     const SignInEmailPasswordWithRedux = (e) => {
+        seterror('');
         e.preventDefault();
         if ((validateEmail(email), validatepassword(password))) {
             try {
                 LoginUser(email, password);
                 setTimeout(() => {
                     history.push('/dashboard');
-                }, 3000);
+                }, 2000);
             } catch (err) {
                 seterror(err.message);
             }
@@ -118,6 +104,7 @@ const Login = ({ setform, LoginUser, errormsg }) => {
                         value={email}
                     />
                 </div>
+
                 <div className="">
                     <input
                         name="Password"
@@ -201,7 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    errormsg: state.LoginReducer.Err.message,
+    errormsg: state.LoginReducer.Err,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

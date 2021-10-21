@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { auth } from '../../Firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from '@firebase/auth';
-
-export default function PhoneNumber() {
+import { RecaptchaVerifier } from '@firebase/auth';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+function PhoneNumber({ Login }) {
     const [phoneNumber, setphoneNumber] = useState('');
     const [error, setError] = useState('');
-
+    const history = useHistory();
     const recaptchaconfig = () => {
         window.RecaptchaVerifier = new RecaptchaVerifier(
             'recaptcha-container',
@@ -21,14 +22,15 @@ export default function PhoneNumber() {
 
     const OnSignInClick = () => {
         recaptchaconfig();
-        const PhoneNo = '+91' + phoneNumber;
-        signInWithPhoneNumber(auth, PhoneNo, window.RecaptchaVerifier)
-            .then((response) => {
-                console.log('Sms Sent' + response);
-                window.RecaptchaVerifier = undefined;
-            })
-
-            .catch((err) => console.log(err));
+        try {
+            const PhoneNo = '+91' + phoneNumber;
+            Login(PhoneNo, window.RecaptchaVerifier);
+            setTimeout(() => {
+                history.push('/dashboard');
+            }, 2000);
+        } catch (err) {
+            setError(err);
+        }
     };
 
     const ChangeHandler = (e) => {
@@ -75,3 +77,8 @@ export default function PhoneNumber() {
         </div>
     );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    Login: (phoneNumber, appverifier) => dispatch(phoneNumber, appverifier),
+});
+export default connect(null, mapDispatchToProps)(PhoneNumber);
