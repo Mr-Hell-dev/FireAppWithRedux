@@ -1,4 +1,3 @@
-import { auth } from '../../../Firebase';
 export const InitializeReduxState = (user) => ({
     type: 'INITIAL/INITAILIZATION',
     UserObj: user,
@@ -9,10 +8,9 @@ export const InitializeReduxStateFaliure = (err) => ({
 });
 
 export const InitializerRedux = () => (dispatch) => {
-    console.log(auth);
-    console.log(auth['currentUser']);
-    if (auth.currentUser !== null) {
-        dispatch(InitializeReduxState(auth.currentUser));
+    const user = JSON.parse(localStorage.getItem('User'));
+    if (user !== null) {
+        dispatch(InitializeReduxState(user));
     } else {
         dispatch(
             InitializeReduxStateFaliure({

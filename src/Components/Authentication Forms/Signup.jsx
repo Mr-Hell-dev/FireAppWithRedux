@@ -41,6 +41,7 @@ function Signup({ setform, CreateAccount, Err: errormsg }) {
                 break;
             case 'confirmPassword':
                 setConfirmPassword(e.target.value);
+
                 break;
             default:
                 break;

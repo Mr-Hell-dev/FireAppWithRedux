@@ -2,19 +2,14 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-function ProtectedRoutes({
-    component: Component,
-    User,
-    isLoggedIn,
-    ...restprops
-}) {
-    const loggedin = isLoggedIn;
+function ProtectedRoutes({ component: Component, LoggedIn, ...restprops }) {
+    const loggedIn = LoggedIn;
     return (
         <>
             <Route
                 {...restprops}
                 component={(props) =>
-                    loggedin ? (
+                    loggedIn ? (
                         <Component {...props} />
                     ) : (
                         <Redirect to="/auth" />
@@ -26,8 +21,6 @@ function ProtectedRoutes({
 }
 
 const mapStateToProps = (state) => ({
-    isLoggedIn: state.LoginReducer.LoggedIn,
-    User: state.LoginReducer.User,
+    LoggedIn: state.LoginReducer.LoggedIn,
 });
-
 export default connect(mapStateToProps, null)(ProtectedRoutes);

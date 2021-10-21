@@ -21,13 +21,11 @@ function Dashboard({ User }) {
             .then((res) => res.json())
             .then((data) => {
                 setDataforAg(data);
-                console.log(data);
             })
             .catch((err) => console.log(err));
     }, []);
     return (
         <>
-            {}
             <Suspense fallback={<div> Please wait </div>}>
                 <AgGrid data={DataforAg} />
             </Suspense>
